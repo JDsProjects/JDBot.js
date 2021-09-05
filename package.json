@@ -3,11 +3,11 @@
     "version": "0.0.0",
     "description": "A rewrite of JDBot but in discord.js with some new features",
     "respository": "https://github.com/JDJGInc/JDBot.js",
-    "homepage": "bot.jdjg.(tld) or jdjgbot.(tld)",
+    "homepage": "bot.jdjg.(tld)",
     "license": "MIT",
     "dependencies": {
         "@discordjs/rest": "0.1.0-canary.0",
         "discord-api-types": "^0.22.0",
-        "discord.js": "^13.1.0"
+        "discord.js": "^12.5.3"
     }
 }
