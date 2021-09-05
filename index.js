@@ -1,10 +1,12 @@
-const { Client, Intents } = require("discord.js");
-const token = process.env.TOKEN;
-const allIntents = new Intents(32767);
-const client = new Client({ allIntents });
+const { Client, Intents } = require("discord.js"),
+    token = process.env.TOKEN,
+    allIntents = new Intents(32767),
+    client = new Client({ allIntents });
 
 client.once("ready", () => {
-    console.log("Bot has connected to discord also hi jdjg!");
+    client.user.setStatus("online");
+    console.log(`Logged in as ${client.user.tag}`);
+    console.log(`Id: ${client.user.id}`);
 });
 
 client.login(token);
