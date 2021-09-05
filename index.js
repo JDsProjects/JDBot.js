@@ -1,6 +1,6 @@
 const { Client, Intents } = require("discord.js");
 
-const client = new Client({ intents: Intents.ALL });
+const client = new Client({ intents: 32767 });
 
 const token = process.env.TOKEN;
 
@@ -11,20 +11,25 @@ client.once("ready", () => {
     console.log(`Logged in as ${client.user.tag}`);
     console.log(`Id: ${client.user.id}`);
 
-    let commands = client.application.commands;
+    const guildId = "438848185008390158";
+    const guild = client.guilds.cache.get(guildId);
+
+    let commands;
+
+    if (guild) commands = guild.commands;
+    else commands = client.application.commands;
 
     commands.create({
         name: "hi",
         description: "says hello"
-    })
+    });
 });
 
-client.on("interactionCreate", async interation => {
+client.on("interactionCreate", async () => {
     if(!interaction.isCommand()) return;
 
-    const { commandName } = interaction;
-
-    if (commandName = "hi") interaction.reply({});
+    if (interaction.commandName = "hi") await interaction.reply({ content: "hello" });
 });
 
 client.login(token);
+
