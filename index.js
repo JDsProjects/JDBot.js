@@ -41,7 +41,7 @@ client.on("interactionCreate", async msg => {
     if (!msg.isCommand() || msg.user.bot) return;
 
     // Next time we will make a modular command handler
-    if (interaction.commandName = "hi") await interaction.reply({ content: `Hello ${interaction.user.username}${interaction.user.discriminator}`});
+    if (msg.commandName = "hi") await msg.reply({ content: `Hello ${msg.user.username}${msg.user.discriminator}`});
 });
 
 // Authenticate to Discord API

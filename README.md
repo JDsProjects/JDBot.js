@@ -1,3 +1,2 @@
 # JDBot.js
-A version of JDBot but in javascript
-More information soon.
+A version of JDBot but in javascript: more information soon.
