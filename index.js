@@ -2,34 +2,47 @@ const { Client, Intents } = require("discord.js");
 
 const client = new Client({ intents: 32767 });
 
-const token = process.env.TOKEN;
+// Keep repl process alive
+require("http").createServer((req, res) => res.end("JDBot.js is up and running ")).listen(8080);
 
+const statuses = [
+    { msg: 'JDBot but in discord.js', type: 'PLAYING' }, 
+    { msg: `${client.guilds.cache.size} | ${client.users.cache.size}`, type: 'WATCHING'},
+    { msg: 'watching new updates coming soon...', type: 'WATCHING' }
+];
+
+var i = 0;
+function changeStatus() {
+    client.user.setActivity(statuses[i].msg, statuses[i].type);
+    i++;
+}
+
+// When the bot is authenticated to Discord
 client.once("ready", () => {
+    // Status
     client.user.setStatus("online");
-    client.user.setActivity('Playing JDBot but in discord.js', {type: 'PLAYING'});
+    changeStatus();
+    setTimeout(changeStatus, 60000);
 
+    // Debug
     console.log(`Logged in as ${client.user.tag}`);
     console.log(`Id: ${client.user.id}`);
 
-    const guildId = "438848185008390158";
-    const guild = client.guilds.cache.get(guildId);
-
-    let commands;
-
-    if (guild) commands = guild.commands;
-    else commands = client.application.commands;
-
-    commands.create({
+    // Register commands
+    client.application.commands.create({
         name: "hi",
         description: "says hello"
     });
 });
 
-client.on("interactionCreate", async () => {
-    if(!interaction.isCommand()) return;
+// When a command is called
+client.on("interactionCreate", async msg => {
+    // If the command doesn't exist or is being ran by a bot; exit
+    if (!msg.isCommand() || msg.user.bot) return;
 
-    if (interaction.commandName = "hi") await interaction.reply({ content: "hello" });
+    // Next time we will make a modular command handler
+    if (interaction.commandName = "hi") await interaction.reply({ content: `Hello ${interaction.user.username}${interaction.user.discriminator}`});
 });
 
-client.login(token);
-
+// Authenticate to Discord API
+client.login(process.env.TOKEN);
