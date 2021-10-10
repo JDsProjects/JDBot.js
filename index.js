@@ -8,9 +8,9 @@ const client = new Client({ intents: 32767 });
 require("http").createServer((req, res) => res.end("JDBot.js is up and running ")).listen(8080);
 
 let commands = [];
-const files = fs.readdirSync(".commands").filter(file => file.endsWith(".js"));
+const files = fs.readdirSync("commands").filter(file => file.endsWith(".js"));
 files.forEach(file => {
-    command = require(`.commands${file}`)
+    command = require(`commands${file}`)
     commands.push(command.data.toJSON())
 });
 
