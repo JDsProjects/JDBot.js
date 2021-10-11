@@ -1,5 +1,4 @@
-const { Client, Intents } = require("discord.js");
-const { SlashCommandBuilder } = require("@discordjs/builders");
+const { Client, Intents, Collection } = require("discord.js");
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const fs = require("fs");
@@ -10,23 +9,25 @@ const client = new Client({ intents: 32767 });
 require("http").createServer((req, res) => res.end("JDBot.js is up and running ")).listen(8080);
 
 let commands = [];
+client.commands = new Collection();
 const files = fs.readdirSync("commands").filter(file => file.endsWith(".js"));
-files.forEach(file => commands.push(require(`commands${file}`).data.toJSON()));
+files.forEach(file => {
+    const command = require(`./commands/${file}`);
+    commands.push(command.data.toJSON());
+    client.commands.set(command.data.name, command);
+});
 
 client.once("ready", () => {
     // Status
-    const statuses = [
-        { 
-            msg: 'JDBot but in discord.js', 
-            type: 'PLAYING' 
-        }, 
-        {
+    const statuses = [{ 
+            msg: "JDBot but in discord.js", 
+            type: "PLAYING" 
+        }, {
             msg: `${client.guilds.cache.size === 0 ? "No " : client.guilds.cache.size} servers | ${client.users.cache.size === 0 ? "No " : client.users.cache.size} Users`,
-            type: 'WATCHING'
-        },
-        {
-            msg: 'Watching new updates coming soon...',
-            type: 'WATCHING'
+            type: "WATCHING"
+        }, {
+            msg: "Watching new updates coming soon...",
+            type: "WATCHING"
         }
     ];
     var i = 0;
@@ -36,8 +37,9 @@ client.once("ready", () => {
     }
     client.user.setStatus("online");
     changeStatus();
-    setTimeout(changeStatus, 60000);
+    setTimeout(changeStatus, 50000);
 
+    // Debug information
     console.log(`Logged in as ${client.user.tag}`);
     console.log(`Id: ${client.user.id}`);
 
@@ -65,7 +67,7 @@ client.once("ready", () => {
 client.on("interactionCreate", async interaction => {
     // If the command doesn't exist or is being ran by a bot; exit
     if (!interaction.isCommand() || interaction.user.bot) return;
-    const command = commands.get(interaction.commandName);
+    const command = client.commands.get(interaction.commandName);
     if (!command) return;
     try {
         await command.execute(interaction);
@@ -76,3 +78,5 @@ client.on("interactionCreate", async interaction => {
         });
     }
 });
+
+client.login(process.env.TOKEN);
