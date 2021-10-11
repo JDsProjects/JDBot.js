@@ -1,9 +1,19 @@
-const { Client, Intents, Collection } = require("discord.js");
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const fs = require("fs");
+// Next we will implement developer features (eval and real time command reloading) and port the database
 
-const client = new Client({ intents: 32767 });
+const {
+    Client,
+    Intents,
+    Collection
+    } = require("discord.js"), {
+        REST
+    } = require('@discordjs/rest'), {
+        Routes
+    } = require('discord-api-types/v9'),
+    fs = require("fs");
+
+const client = new Client({
+    intents: 32767 
+});
 
 // Keep repl process alive
 require("http").createServer((req, res) => res.end("JDBot.js is up and running ")).listen(8080);
@@ -74,7 +84,8 @@ client.on("interactionCreate", async interaction => {
     } catch (error) {
         console.error(error);
         await interaction.reply({
-            content: "Could't run command due to an error!", ephemeral: true
+            content: "Could't run command due to an error!",
+            ephemeral: true
         });
     }
 });
