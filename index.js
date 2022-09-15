@@ -14,6 +14,7 @@ const {
 const client = new Client({
     intents: 32767 
 });
+//update intents soon
 
 // Keep repl process alive
 require("http").createServer((req, res) => res.end("JDBot.js is up and running ")).listen(8080);
