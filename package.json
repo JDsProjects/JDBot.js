@@ -1,0 +1,18 @@
+{
+    "name": "JDBot",
+    "version": "0.0.0",
+    "description": "A rewrite of JDBot but in discord.js with some new features",
+    "respository": "https://github.com/JDJGInc/JDBot.js",
+    "homepage": "bot.jdjg.(tld)",
+    "license": "MIT",
+    "dependencies": {
+        "@discordjs/builders": "^0.6.0",
+        "@discordjs/rest": "^1.3.0",
+        "discord-api-types": "^0.23.1",
+        "discord.js": "^14.6.0",
+        "index.js": "0.0.3"
+    },
+    "devDependencies": {
+        "node": "^18.12.1"
+    }
+}
