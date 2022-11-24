@@ -2,3 +2,5 @@ node_modules
 package-lock.json
 .replit
 .breakpoints
+replit.nix
+yarn.lock
