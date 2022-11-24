@@ -3,3 +3,4 @@ package-lock.json
 .replit
 .breakpoints
 replit.nix
+yarn.lock
